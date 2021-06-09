@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:05:34 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/09 17:09:19 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/09 17:12:25 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void get_args(t_philo *philo, char **av, int ac)
 int main (int ac, char **av)
 {
     t_philo philo;
+    if (ac < 5 || ac > 6)
+        return (fail("error arguments number"));
     get_args(&philo, av, ac);
     printf("%d %lu %lu %lu %d", philo.arg->number, philo.arg->time_todie, 
         philo.arg->time_toeat, philo.arg->time_tosleep, philo.arg->must_eat);
