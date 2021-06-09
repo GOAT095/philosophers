@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <pthread.h>
-
+#include "../libft/libft.h"
 
 typedef struct s_arg
 {
