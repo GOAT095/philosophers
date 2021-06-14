@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:05:34 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/14 16:22:59 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/14 16:26:10 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void        *philo_funcn(void *data)
     {
         unsigned long long start_sleep;
     
-        printf("\033[0;32m%d is thinking\n", philo->id + 1);
+        printf("\033[0;32mphilo%d is thinking\n", philo->id + 1);
         pthread_mutex_lock(&philo->arg->forks[philo->id]);
         printf("\033[0;31mphilo %d has taken left fork\n", philo->id + 1);
         pthread_mutex_lock(&philo->arg->forks[(philo->id + 1) % philo->arg->number]);
