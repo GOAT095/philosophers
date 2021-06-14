@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:05:34 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/14 18:12:13 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/14 18:55:54 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void        *philo_funcn(void *data)
 		pthread_mutex_lock(&philo->arg->forks[philo->id]);
 		printf("\033[0;31mphilo %d has taken left fork\n", philo->id + 1);
 		pthread_mutex_lock(&philo->arg->forks[(philo->id + 1) % philo->arg->number]);
-		printf("\033[0;31mphilo %d has taken right fork\n", philo->id + 1);
+		printf("\033[0;31mphilo %d has taken right fork\n", philo->id);
 		printf("\033[0;32mphilo %d is eating\n", philo->id + 1);
 		philo->eat_counter++;
 		philo->last_eat = get_time();
@@ -162,7 +162,6 @@ int main (int ac, char **av)
 	get_args(&arg, av, ac, &philo);
 	// printf("%d %lu %lu %lu %d", philo.arg->number, philo.arg->time_todie, 
 	//     philo.arg->time_toeat, philo.arg->time_tosleep, philo.arg->must_eat);
-	printf("%d\n", arg.number);
 	init_philo(philo, &arg);
 	i = 0;
 	while (i < arg.number)
