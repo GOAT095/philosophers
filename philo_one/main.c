@@ -6,13 +6,11 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:05:34 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/09 19:04:51 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/14 14:53:56 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo1.h"
-
-
 
 int fail(char *str)
 {
@@ -25,7 +23,7 @@ int check_args(char **av)
     int j;
     int i;
 
-    i = 0;
+    i = 1;
     while(av[i])
     {
         j = 0;
@@ -59,9 +57,9 @@ int main (int ac, char **av)
 {
     t_philo philo;
     if (ac < 5 || ac > 6)
-        return (fail("error arguments number"));
+        return (fail("error arguments number\n"));
     if (!(check_args(av)))
-        return (fail("error arguments"));
+        return (fail("error arguments\n"));
     get_args(&philo, av, ac);
     printf("%d %lu %lu %lu %d", philo.arg->number, philo.arg->time_todie, 
         philo.arg->time_toeat, philo.arg->time_tosleep, philo.arg->must_eat);
