@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:05:34 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/14 16:12:23 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/14 16:22:59 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,10 +96,10 @@ void        *philo_funcn(void *data)
     
         printf("\033[0;32m%d is thinking\n", philo->id + 1);
         pthread_mutex_lock(&philo->arg->forks[philo->id]);
-        printf("\033[0;31m%d has taken left fork\n", philo->id + 1);
+        printf("\033[0;31mphilo %d has taken left fork\n", philo->id + 1);
         pthread_mutex_lock(&philo->arg->forks[(philo->id + 1) % philo->arg->number]);
-        printf("\033[0;31m%d has taken right fork\n", philo->id + 1);
-        printf("philo %d is eating\n", philo->id + 1);
+        printf("\033[0;31mphilo %d has taken right fork\n", philo->id + 1);
+        printf("\033[0;32mphilo %d is eating\n", philo->id + 1);
         philo->eat_counter++;
         philo->last_eat = get_time();
         usleep(philo->arg->time_toeat * 1000 - 14000);
@@ -109,7 +109,7 @@ void        *philo_funcn(void *data)
         pthread_mutex_unlock(&philo->arg->forks[(philo->id + 1) % philo->arg->number]);
         pthread_mutex_unlock(&philo->arg->forks[philo->id]);
         philo->state = sleep;
-        printf("philo is sleeping\n");
+        printf("\033[0;32mphilo %d is sleeping\n", philo->id + 1);
         start_sleep = get_time();
         usleep(philo->arg->time_tosleep * 1000 - 1400);
         while (get_time() - start_sleep < philo->arg->time_tosleep)
