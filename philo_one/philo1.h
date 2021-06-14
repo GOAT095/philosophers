@@ -15,6 +15,7 @@
 
 typedef struct s_arg
 {
+    int all_eat;
     int number;
     unsigned long long time_todie;
     unsigned long long time_toeat;

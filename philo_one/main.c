@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:05:34 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/14 17:46:16 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/14 18:12:13 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void get_args(t_arg *arg, char **av, int ac,t_philo **philo)
 	arg->forks = malloc(sizeof(pthread_mutex_t) * (int)ft_atoi(av[1]));
 	arg->number = ft_atoi(av[1]);
 	arg->must_eat = -1;
+	arg->all_eat = 0;
 	arg->time_todie = ft_atoi(av[2]);
 	arg->time_toeat = ft_atoi(av[3]);
 	arg->time_tosleep = ft_atoi(av[4]);
@@ -129,14 +130,18 @@ void    check_eat_death(t_philo *philo, t_arg *arg)
 		{
 			if (philo[i].state != eat && ((get_time() - philo[i].last_eat) >= arg->time_todie))
 			{
+				philo[i].state = dead;
 				printf("\033[0;37mphilo %d is dead\n", philo[i].id + 1);
 				return ;
 			}
 			else if (philo[i].eat_counter == arg->must_eat)
 			{
-				printf("dead\n");
-				return ;
+				philo[i].state = sleep;
+				// printf("\033[0;37mphilo %d is asleep\n", philo[i].id + 1);
+				arg->all_eat++;
 			}
+			if (arg->all_eat == arg->number)
+				return ;
 			i++;
 		}
 		usleep(10);
