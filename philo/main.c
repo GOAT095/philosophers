@@ -6,11 +6,11 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:05:34 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/15 20:11:01 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/15 21:09:39 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo1.h"
+#include "philo.h"
 
 int	check_args(char **av)
 {
@@ -75,7 +75,7 @@ void	init_philo(t_philo *philo, t_arg *arg)
 		philo[i].last_eat = get_time();
 		philo[i].eat_counter = 0;
 		philo[i].arg = arg;
-		philo[i].state = start;
+		philo[i].state = START;
 		i++;
 	}
 }
@@ -99,7 +99,7 @@ void	*philo_funcn(void *data)
 		printf("\033[0;32mphilo %d is eating\n", philo->id + 1);
 		philo->last_eat = get_time();
 		philo->eat_counter++;
-		philo->state = eat;
+		philo->state = EAT;
 		usleep(philo->arg->time_toeat * 1000 - 14000);
 		while (get_time() - philo->last_eat < philo->arg->time_toeat)
 			;
@@ -107,7 +107,7 @@ void	*philo_funcn(void *data)
 		pthread_mutex_unlock(&philo->arg->forks[right]);
 		pthread_mutex_unlock(&philo->arg->forks[philo->id]);
 		start_sleep = get_time();
-		philo->state = sleep;
+		philo->state = SLEEP;
 		usleep(philo->arg->time_tosleep * 1000 - 1400);
 		while (get_time() - start_sleep < philo->arg->time_tosleep)
 			;
@@ -124,16 +124,16 @@ void	check_eat_death(t_philo *philo, t_arg *arg)
 		i = 0;
 		while (i < arg->number)
 		{
-			if (philo[i].state != eat
+			if (philo[i].state != EAT
 				&& ((get_time() - philo[i].last_eat) >= arg->time_todie))
 			{
-				philo[i].state = dead;
+				philo[i].state = DEAD;
 				printf("\033[0;37mphilo %d is dead\n", philo[i].id + 1);
 				return ;
 			}
 			if (philo[i].eat_counter == arg->must_eat)
 			{
-				philo[i].state = sleep;
+				philo[i].state = SLEEP;
 				arg->all_eat++;
 			}
 			if (arg->all_eat == arg->number)

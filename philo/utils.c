@@ -6,11 +6,11 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 19:56:36 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/15 20:02:47 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/15 21:08:58 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo1.h"
+#include "philo.h"
 
 int	ft_strlen(const char *str)
 {
