@@ -6,33 +6,11 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:05:34 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/15 21:46:08 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/15 21:49:57 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	check_args(char **av)
-{
-	int	j;
-	int	i;
-
-	i = 1;
-	while (av[i])
-	{
-		j = 0;
-		while (av[i][j])
-		{
-			if (!(av[i][j] <= '9' && av[i][j] >= '0'))
-				return (0);
-			j++;
-		}
-		if ((ft_atoi(av[i])) < 0)
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 void	init_philo(t_philo *philo, t_arg *arg)
 {
@@ -84,7 +62,7 @@ void	*philo_funcn(void *data)
 	return (NULL);
 }
 
-void	check_counter(t_philo *philo, int i, t_arg *arg)
+void	check_count(t_philo *philo, int i, t_arg *arg)
 {
 	if (philo[i].eat_counter == arg->must_eat)
 	{
@@ -109,7 +87,7 @@ void	check_eat_death(t_philo *philo, t_arg *arg)
 				printf("\033[0;37mphilo %d is dead\n", philo[i].id + 1);
 				return ;
 			}
-			check_counter(philo, i, arg);
+			check_count(philo, i, arg);
 			if (arg->all_eat == arg->number)
 			{
 				i = -1;

@@ -1,7 +1,7 @@
 NAME = philo
 
 
-SRCS = main.c utils.c
+SRCS = main.c utils.c utils2.c
 
 FLAGS = -Werror -Wextra -Wall
 
