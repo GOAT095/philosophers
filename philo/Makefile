@@ -1,7 +1,7 @@
 NAME = philo
 
 
-SRCS = main.c
+SRCS = main.c utils.c
 
 FLAGS = -Werror -Wextra -Wall
 
@@ -14,10 +14,10 @@ all: $(NAME)
 clean: 
 	rm -rf *.dSYM
 
-fclean:
+fclean: clean
 	rm -rf $(NAME)
 
-re: fclean all  
+re: fclean all
 	 
 
 #re: fclean all
