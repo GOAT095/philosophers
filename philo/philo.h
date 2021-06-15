@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 20:08:21 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/15 21:06:44 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/15 21:28:37 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,13 @@ typedef struct s_philo
 	int					state;
 }				t_philo;
 
-int	ft_strlen(const char *str);
-int	ft_atoi(const char *str);
-int	fail(char *str);
+int					ft_strlen(const char *str);
+int					ft_atoi(const char *str);
+int					check_args(char **av);
+int					fail(char *str);
+void				get_args(t_arg *arg, char **av, int ac, t_philo **philo);
+unsigned long long	get_time(void);
+void				init_philo(t_philo *philo, t_arg *arg);
+void				*philo_funcn(void *data);
+void				check_eat_death(t_philo *philo, t_arg *arg);
 #endif
