@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:05:34 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/15 21:29:10 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/15 21:46:08 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,15 @@ void	*philo_funcn(void *data)
 	return (NULL);
 }
 
+void	check_counter(t_philo *philo, int i, t_arg *arg)
+{
+	if (philo[i].eat_counter == arg->must_eat)
+	{
+		philo[i].state = SLEEP;
+		arg->all_eat++;
+	}
+}
+
 void	check_eat_death(t_philo *philo, t_arg *arg)
 {
 	int	i;
@@ -100,13 +109,9 @@ void	check_eat_death(t_philo *philo, t_arg *arg)
 				printf("\033[0;37mphilo %d is dead\n", philo[i].id + 1);
 				return ;
 			}
-			if (philo[i].eat_counter == arg->must_eat)
-			{
-				philo[i].state = SLEEP;
-				arg->all_eat++;
-			}
+			check_counter(philo, i, arg);
 			if (arg->all_eat == arg->number)
-			{	
+			{
 				i = -1;
 				while (++i < arg->number)
 					pthread_join(philo[i].t, NULL);
