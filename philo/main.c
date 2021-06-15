@@ -6,25 +6,25 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:05:34 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/15 15:41:59 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/15 16:10:35 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo1.h"
 
-int fail(char *str)
+int	fail(char *str)
 {
 	write(1, str, ft_strlen(str));
-	return(1);
+	return (1);
 }
 
-int check_args(char **av)
+int	check_args(char **av)
 {
-	int j;
-	int i;
+	int	j;
+	int	i;
 
 	i = 1;
-	while(av[i])
+	while (av[i])
 	{
 		j = 0;
 		while (av[i][j])
@@ -40,9 +40,9 @@ int check_args(char **av)
 	return (1);
 }
 
-void get_args(t_arg *arg, char **av, int ac,t_philo **philo)
+void	get_args(t_arg *arg, char **av, int ac, t_philo **philo)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	arg->forks = malloc(sizeof(pthread_mutex_t) * (int)ft_atoi(av[1]));
@@ -62,17 +62,17 @@ void get_args(t_arg *arg, char **av, int ac,t_philo **philo)
 	*philo = (t_philo *)malloc(sizeof(t_philo) * arg->number);
 }
 
-unsigned long long get_time()
+unsigned long long	get_time(void)
 {
-	struct timeval time;
+	struct timeval	time;
 
 	gettimeofday(&time, NULL);
 	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
 }
 
-void    init_philo(t_philo *philo, t_arg *arg)
+void	init_philo(t_philo *philo, t_arg *arg)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < arg->number)
@@ -86,15 +86,15 @@ void    init_philo(t_philo *philo, t_arg *arg)
 	}
 }
 
-void        *philo_funcn(void *data)
+void	*philo_funcn(void *data)
 {
-	t_philo     *philo;
+	t_philo	*philo;
+	unsigned long long	start_sleep;
 
 	philo = data;
-	while (philo->eat_counter < philo->arg->must_eat || philo->arg->must_eat == -1)
+	while (philo->eat_counter < philo->arg->must_eat
+		|| philo->arg->must_eat == -1)
 	{
-		unsigned long long start_sleep;
-	
 		printf("\033[0;32mphilo %d is thinking\n", philo->id + 1);
 		pthread_mutex_lock(&philo->arg->forks[philo->id]);
 		printf("\033[0;31mphilo %d has taken left fork\n", philo->id + 1);
@@ -119,7 +119,7 @@ void        *philo_funcn(void *data)
 	return (NULL);
 }
 
-void    check_eat_death(t_philo *philo, t_arg *arg)
+void	check_eat_death(t_philo *philo, t_arg *arg)
 {
 	int i;
 
@@ -158,7 +158,7 @@ void    check_eat_death(t_philo *philo, t_arg *arg)
 	}
 }
 
-int main (int ac, char **av)
+int	main(int ac, char **av)
 {
 	t_philo *philo;
 	t_arg   arg;
@@ -170,8 +170,6 @@ int main (int ac, char **av)
 		return (fail("error arguments\n"));
 	arg.number = 0;
 	get_args(&arg, av, ac, &philo);
-	// printf("%d %lu %lu %lu %d", philo.arg->number, philo.arg->time_todie, 
-	//     philo.arg->time_toeat, philo.arg->time_tosleep, philo.arg->must_eat);
 	init_philo(philo, &arg);
 	i = 0;
 	while (i < arg.number)
