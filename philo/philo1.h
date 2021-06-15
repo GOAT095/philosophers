@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <sys/time.h>
 #include <pthread.h>
-#include "./libft/libft.h"
 
 #define start 0
 #define eat 1

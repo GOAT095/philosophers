@@ -1,23 +1,21 @@
 NAME = philo
 
-LIBFT_PATH = ./libft
 
-SRCS = *.c
+SRCS = main.c
+
 FLAGS = -Werror -Wextra -Wall
 
 ASAN =  -g -fsanitize=address
 $(NAME) :
-	make -C $(LIBFT_PATH)
-	gcc $(ASAN) $(SRCS) ./libft/libft.a  -o $(NAME)
+	gcc $(ASAN) $(SRCS) -o $(NAME)
 	
 all: $(NAME)
 
 clean: 
-	make clean -C $(LIBFT_PATH)
+	rm -rf *.dSYM
 
 fclean:
-	rm -rf $(NAME) *.dSYM
-	make fclean -C $(LIBFT_PATH)
+	rm -rf $(NAME)
 
 re: fclean all  
 	 
