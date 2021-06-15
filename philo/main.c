@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:05:34 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/15 16:10:35 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/15 16:35:08 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,17 +88,19 @@ void	init_philo(t_philo *philo, t_arg *arg)
 
 void	*philo_funcn(void *data)
 {
-	t_philo	*philo;
+	t_philo				*philo;
 	unsigned long long	start_sleep;
+	int					right;
 
 	philo = data;
 	while (philo->eat_counter < philo->arg->must_eat
 		|| philo->arg->must_eat == -1)
 	{
+		right = (philo->id + 1) % philo->arg->number;
 		printf("\033[0;32mphilo %d is thinking\n", philo->id + 1);
 		pthread_mutex_lock(&philo->arg->forks[philo->id]);
 		printf("\033[0;31mphilo %d has taken left fork\n", philo->id + 1);
-		pthread_mutex_lock(&philo->arg->forks[(philo->id + 1) % philo->arg->number]);
+		pthread_mutex_lock(&philo->arg->forks[right]);
 		printf("\033[0;31mphilo %d has taken right fork\n", philo->id + 1);
 		printf("\033[0;32mphilo %d is eating\n", philo->id + 1);
 		philo->last_eat = get_time();
@@ -108,7 +110,7 @@ void	*philo_funcn(void *data)
 		while (get_time() - philo->last_eat < philo->arg->time_toeat)
 			;
 		printf("\033[0;32mphilo %d is sleeping\n", philo->id + 1);
-		pthread_mutex_unlock(&philo->arg->forks[(philo->id + 1) % philo->arg->number]);
+		pthread_mutex_unlock(&philo->arg->forks[right]);
 		pthread_mutex_unlock(&philo->arg->forks[philo->id]);
 		start_sleep = get_time();
 		philo->state = sleep;
@@ -121,14 +123,15 @@ void	*philo_funcn(void *data)
 
 void	check_eat_death(t_philo *philo, t_arg *arg)
 {
-	int i;
+	int	i;
 
 	while (1)
 	{
 		i = 0;
 		while (i < arg->number)
 		{
-			if (philo[i].state != eat && ((get_time() - philo[i].last_eat) >= arg->time_todie))
+			if (philo[i].state != eat
+				&& ((get_time() - philo[i].last_eat) >= arg->time_todie))
 			{
 				philo[i].state = dead;
 				printf("\033[0;37mphilo %d is dead\n", philo[i].id + 1);
@@ -137,19 +140,16 @@ void	check_eat_death(t_philo *philo, t_arg *arg)
 			if (philo[i].eat_counter == arg->must_eat)
 			{
 				philo[i].state = sleep;
-				// printf("\033[0;37mphilo %d is asleep\n", philo[i].id + 1);
-				// printf("\033[0;37m wa7ed philo sala\n");
 				arg->all_eat++;
 			}
 			if (arg->all_eat == arg->number)
 			{	
-				i  = 0;
+				i = 0;
 				while (i < arg->number)
 				{
 					pthread_join(philo[i].t, NULL);
 					i++;
 				}
-				// printf("\033[0;37mphilo salaw\n");
 				return ;
 			}
 			i++;
@@ -160,9 +160,9 @@ void	check_eat_death(t_philo *philo, t_arg *arg)
 
 int	main(int ac, char **av)
 {
-	t_philo *philo;
-	t_arg   arg;
-	int     i;
+	t_philo	*philo;
+	t_arg	arg;
+	int		i;
 
 	if (ac < 5 || ac > 6)
 		return (fail("error arguments number\n"));
