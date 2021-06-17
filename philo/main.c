@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:05:34 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/17 17:08:13 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/17 17:36:48 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,16 @@
 
 void	eating(t_philo *philo, int right)
 {
-	printf("\033[0;32m%llu %d is thinking\n", get_time() - philo->arg->program_start,philo->id + 1);
+	printf("%llu %d is thinking\n",
+		get_time() - philo->arg->program_start, philo->id + 1);
 	pthread_mutex_lock(&philo->arg->forks[philo->id]);
-	printf("\033[0;31m%llu %d has taken a fork\n", get_time() - philo->arg->program_start, philo->id + 1);
+	printf("%llu %d has taken a fork\n",
+		get_time() - philo->arg->program_start, philo->id + 1);
 	pthread_mutex_lock(&philo->arg->forks[right]);
-	printf("\033[0;31m%llu %d has taken a fork\n", get_time() - philo->arg->program_start, philo->id + 1);
-	printf("\033[0;33m%llu %d is eating\n", get_time() - philo->arg->program_start, philo->id + 1);
+	printf("%llu %d has taken a fork\n",
+		get_time() - philo->arg->program_start, philo->id + 1);
+	printf("%llu %d is eating\n",
+		get_time() - philo->arg->program_start, philo->id + 1);
 	philo->last_eat = get_time();
 	philo->eat_counter++;
 	philo->state = EAT;
@@ -49,8 +53,8 @@ void	check_eat_death(t_philo *philo, t_arg *arg)
 			if (philo[i].state != EAT
 				&& ((get_time() - philo[i].last_eat) >= arg->time_todie))
 			{
-				philo[i].state = DEAD;
-				printf("\033[0;37m%llu %d is dead\n", get_time() - philo->arg->program_start, philo[i].id + 1);
+				printf("%llu %d is dead\n",
+					get_time() - philo->arg->program_start, philo[i].id + 1);
 				return ;
 			}
 			check_count(philo, i, arg);

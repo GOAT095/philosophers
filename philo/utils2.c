@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 21:49:21 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/17 17:08:33 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/17 17:33:25 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void	*philo_funcn(void *data)
 	{
 		right = (philo->id + 1) % philo->arg->number;
 		eating(philo, right);
-		printf("\033[0;35m%llu %d is sleeping\n", get_time() - philo->arg->program_start, philo->id + 1);
+		printf("%llu %d is sleeping\n",
+			get_time() - philo->arg->program_start, philo->id + 1);
 		pthread_mutex_unlock(&philo->arg->forks[right]);
 		pthread_mutex_unlock(&philo->arg->forks[philo->id]);
 		start_sleep = get_time();
