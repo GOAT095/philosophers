@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 20:08:21 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/15 21:28:37 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/17 17:03:31 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ typedef struct s_arg
 {
 	int					all_eat;
 	int					number;
+	unsigned long long	program_start;
 	unsigned long long	time_todie;
 	unsigned long long	time_toeat;
 	unsigned long long	time_tosleep;
@@ -58,4 +59,5 @@ unsigned long long	get_time(void);
 void				init_philo(t_philo *philo, t_arg *arg);
 void				*philo_funcn(void *data);
 void				check_eat_death(t_philo *philo, t_arg *arg);
+void				eating(t_philo *philo, int right);
 #endif
