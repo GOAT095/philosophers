@@ -1,4 +1,4 @@
-NAME = philo
+NAME = philo_bonus
 
 
 SRCS = main.c utils.c utils2.c
@@ -7,7 +7,7 @@ FLAGS = -Werror -Wextra -Wall
 
 ASAN =  -g -fsanitize=address
 $(NAME) :
-	gcc $(SRCS) -o $(NAME)
+	gcc $(ASAN) $(SRCS) -o $(NAME)
 	
 all: $(NAME)
 
