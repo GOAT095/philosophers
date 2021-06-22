@@ -16,10 +16,8 @@ void	print_it(int i, t_philo *philo)
 {
 	sem_wait(philo->arg->protect_output);
 	if (i == EAT)
-	{
 		printf("%llu %d is eating\n",
 			get_time() - philo->arg->program_start, philo->id + 1);
-	}
 	else if (i == LEFT_FORK || i == RIGHT_FORK)
 		printf("%llu %d has taken a fork\n",
 			get_time() - philo->arg->program_start, philo->id + 1);
@@ -76,7 +74,6 @@ int	main(int ac, char **av)
 	int		i;
 	int		x;
 
-
 	if (ac < 5 || ac > 6)
 		return (fail("error arguments number\n"));
 	if (!(check_args(av)))
@@ -90,6 +87,8 @@ int	main(int ac, char **av)
 	arg.program_start = get_time();
 	while (++i < arg.number)
 	{
+		printf("time now is {%llu}\n",
+			get_time() - philo->arg->program_start);
 		philo[i].pid = fork();
 		if (philo[i].pid == 0)
 		{

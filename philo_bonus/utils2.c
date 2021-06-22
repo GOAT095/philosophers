@@ -54,9 +54,9 @@ void	sleep_it(unsigned long long time, t_arg *arg)
 	unsigned long long	start_sleep;
 
 	start_sleep = get_time();
-	usleep(time * 1000 - 2000);
-		while (get_time() - start_sleep < time)
-			;
+	usleep(time * 1000 - 1400);
+	while (get_time() - start_sleep < time)
+		;
 }
 
 void	*philo_funcn(void *data)
@@ -74,7 +74,7 @@ void	*philo_funcn(void *data)
 		print_it(SLEEP, philo);
 		philo->state = SLEEP;
 		sleep_it(philo->arg->time_tosleep, philo->arg);
-		print_it(THINKING,  philo);
+		print_it(THINKING, philo);
 		philo->state = THINKING;
 	}
 	return (NULL);
