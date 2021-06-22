@@ -78,9 +78,9 @@ void	get_args(t_arg *arg, char **av, int ac, t_philo **philo)
 	arg->time_todie = ft_atoi(av[2]);
 	arg->time_toeat = ft_atoi(av[3]);
 	arg->time_tosleep = ft_atoi(av[4]);
-	arg->program_start = get_time();
 	if (ac == 6)
 		arg->must_eat = ft_atoi(av[5]);
+	sem_unlink("file");
 	arg->forks = sem_open("file", O_CREAT, 0644, arg->number);
 	*philo = (t_philo *)malloc(sizeof(t_philo) * arg->number);
 }

@@ -19,6 +19,7 @@
 # include <sys/time.h>
 # include <pthread.h>
 # include <semaphore.h>
+# include <signal.h>
 
 # define START 0
 # define EAT 1
@@ -38,12 +39,13 @@ typedef struct s_arg
 	unsigned long long	time_tosleep;
 	int					must_eat;
 	sem_t				*forks;
-	sem_t				protect_output;
+	sem_t				*protect_output;
 }				t_arg;
 
 typedef struct s_philo
 {
 	int					id;
+	pid_t				pid;
 	unsigned long long	last_eat;
 	int					eat_counter;
 	pthread_t			t;
@@ -59,6 +61,9 @@ void				get_args(t_arg *arg, char **av, int ac, t_philo **philo);
 unsigned long long	get_time(void);
 void				init_philo(t_philo *philo, t_arg *arg);
 void				*philo_funcn(void *data);
-void				check_eat_death(t_philo *philo, t_arg *arg);
+void				check_eat_death(t_philo philo, t_arg *arg);
 void				eating(t_philo *philo, int right);
+void				kill_all(t_philo *philo, t_arg *arg);
+void				sleep_it(unsigned long long time, t_arg *arg);
+void				print_it(int i, t_philo *philo);
 #endif
