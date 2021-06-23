@@ -16,20 +16,41 @@ void	print_it(int i, t_philo *philo)
 {
 	sem_wait(philo->arg->protect_output);
 	if (i == EAT)
-		printf("%llu %d is eating\n",
-			get_time() - philo->arg->program_start, philo->id + 1);
+	{
+		ft_putnbr_fd(get_time() - philo->arg->program_start, 1);
+		ft_putstr_fd(" ", 1);
+		ft_putnbr_fd(philo->id + 1, 1);
+		ft_putstr_fd(" is eating\n", 1);
+	}
 	else if (i == LEFT_FORK || i == RIGHT_FORK)
-		printf("%llu %d has taken a fork\n",
-			get_time() - philo->arg->program_start, philo->id + 1);
+	{
+		ft_putnbr_fd(get_time() - philo->arg->program_start, 1);
+		ft_putstr_fd(" ", 1);
+		ft_putnbr_fd(philo->id + 1, 1);
+		ft_putstr_fd(" has taken a fork\n", 1);
+	}
 	else if (i == THINKING)
-		printf("%llu %d is thinking\n",
-			get_time() - philo->arg->program_start, philo->id + 1);
+	{
+		ft_putnbr_fd(get_time() - philo->arg->program_start, 1);
+		ft_putstr_fd(" ", 1);
+		ft_putnbr_fd(philo->id + 1, 1);
+		ft_putstr_fd(" is thinking\n", 1);
+	}
 	else if (i == SLEEP)
-		printf("%llu %d is sleeping\n",
-			get_time() - philo->arg->program_start, philo->id + 1);
+	{	
+		ft_putnbr_fd(get_time() - philo->arg->program_start, 1);
+		ft_putstr_fd(" ", 1);
+		ft_putnbr_fd(philo->id + 1, 1);
+		ft_putstr_fd(" is sleeping\n", 1);
+	}
 	else if (i == DEAD)
-		printf("%llu %d is dead\n",
-			get_time() - philo->arg->program_start, philo->id + 1);
+	{
+		ft_putnbr_fd(get_time() - philo->arg->program_start, 1);
+		ft_putstr_fd(" ", 1);
+		ft_putnbr_fd(philo->id + 1, 1);
+		ft_putstr_fd(" is dead\n", 1);
+		return ;
+	}
 	sem_post(philo->arg->protect_output);
 }
 
@@ -59,10 +80,6 @@ void	check_eat_death(t_philo *philo, t_arg *arg)
 			&& ((get_time() - philo->last_eat) >= arg->time_todie))
 		{
 			print_it(DEAD, philo);
-			printf("\ndiff={%llu}\n", get_time() - philo->last_eat);
-			printf("\nnow={%llu}\n", get_time());
-			printf("\nlasteat={%llu}\n",philo->last_eat);
-			printf("\nstart={%llu}\n", philo->arg->program_start);
 			exit(3);
 		}
 		if (philo->eat_counter == arg->must_eat)
@@ -94,8 +111,6 @@ int	main(int ac, char **av)
 	arg.program_start = get_time();
 	while (i < arg.number)
 	{
-		// printf("time now is {%llu}\n",
-		// 	get_time() - philo->arg->program_start);
 		philo[i].pid = fork();
 		if (philo[i].pid == 0)
 		{

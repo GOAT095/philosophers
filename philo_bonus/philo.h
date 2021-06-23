@@ -66,4 +66,7 @@ void				eating(t_philo *philo, int right);
 void				kill_all(t_philo *philo, t_arg *arg);
 void				sleep_it(unsigned long long time, t_arg *arg);
 void				print_it(int i, t_philo *philo);
+void				ft_putnbr_fd(int n, int fd);
+void				ft_putchar_fd(char c, int fd);
+void				ft_putstr_fd(char *s, int fd);
 #endif
