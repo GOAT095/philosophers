@@ -54,7 +54,7 @@ void	sleep_it(unsigned long long time, t_arg *arg)
 	unsigned long long	start_sleep;
 
 	start_sleep = get_time();
-	usleep(time * 1000 - 3000);
+	usleep(time * 1000 - 20000);
 	while (get_time() - start_sleep < time)
 		;
 }
@@ -69,8 +69,6 @@ void	*philo_funcn(void *data)
 		|| philo->arg->must_eat == -1)
 	{
 		eating(philo, right);
-		sem_post(philo->arg->forks);
-		sem_post(philo->arg->forks);
 		print_it(SLEEP, philo);
 		philo->state = SLEEP;
 		sleep_it(philo->arg->time_tosleep, philo->arg);

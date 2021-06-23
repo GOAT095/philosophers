@@ -39,28 +39,35 @@ void	eating(t_philo *philo, int right)
 	print_it(LEFT_FORK, philo);
 	sem_wait(philo->arg->forks);
 	print_it(RIGHT_FORK, philo);
+	philo->state = EAT;
 	print_it(EAT, philo);
 	philo->last_eat = get_time();
 	philo->eat_counter++;
-	philo->state = EAT;
 	sleep_it(philo->arg->time_toeat, philo->arg);
+	sem_post(philo->arg->forks);
+	sem_post(philo->arg->forks);
 }
 
-void	check_eat_death(t_philo philo, t_arg *arg)
+void	check_eat_death(t_philo *philo, t_arg *arg)
 {
 	int	i;
 
 	while (1)
 	{
-		if (philo.state != EAT
-			&& ((get_time() - philo.last_eat) >= arg->time_todie))
+		
+		if (philo->state != EAT
+			&& ((get_time() - philo->last_eat) >= arg->time_todie))
 		{
-			print_it(DEAD, &philo);
+			print_it(DEAD, philo);
+			printf("\ndiff={%llu}\n", get_time() - philo->last_eat);
+			printf("\nnow={%llu}\n", get_time());
+			printf("\nlasteat={%llu}\n",philo->last_eat);
+			printf("\nstart={%llu}\n", philo->arg->program_start);
 			exit(3);
 		}
-		if (philo.eat_counter == arg->must_eat)
+		if (philo->eat_counter == arg->must_eat)
 		{
-			pthread_join(philo.t, NULL);
+			pthread_join(philo->t, NULL);
 			exit(4);
 		}
 		usleep(90);
@@ -93,7 +100,7 @@ int	main(int ac, char **av)
 		if (philo[i].pid == 0)
 		{
 			pthread_create(&philo[i].t, NULL, philo_funcn, &philo[i]);
-			check_eat_death(philo[i], &arg);
+			check_eat_death(&philo[i], &arg);
 		}
 		i++;
 	}

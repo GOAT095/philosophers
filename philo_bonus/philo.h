@@ -61,7 +61,7 @@ void				get_args(t_arg *arg, char **av, int ac, t_philo **philo);
 unsigned long long	get_time(void);
 void				init_philo(t_philo *philo, t_arg *arg);
 void				*philo_funcn(void *data);
-void				check_eat_death(t_philo philo, t_arg *arg);
+void				check_eat_death(t_philo *philo, t_arg *arg);
 void				eating(t_philo *philo, int right);
 void				kill_all(t_philo *philo, t_arg *arg);
 void				sleep_it(unsigned long long time, t_arg *arg);
