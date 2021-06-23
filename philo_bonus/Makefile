@@ -7,7 +7,7 @@ FLAGS = -Werror -Wextra -Wall
 
 ASAN =  -g -fsanitize=address
 $(NAME) :
-	gcc $(ASAN) $(SRCS) -o $(NAME)
+	gcc $(SRCS) -o $(NAME)
 	
 all: $(NAME)
 

@@ -81,20 +81,21 @@ int	main(int ac, char **av)
 	arg.number = 0;
 	get_args(&arg, av, ac, &philo);
 	init_philo(philo, &arg);
-	i = -1;
+	i = 0;
 	sem_unlink("print");
 	arg.protect_output = sem_open("print", O_CREAT, 0644, 1);
 	arg.program_start = get_time();
-	while (++i < arg.number)
+	while (i < arg.number)
 	{
-		printf("time now is {%llu}\n",
-			get_time() - philo->arg->program_start);
+		// printf("time now is {%llu}\n",
+		// 	get_time() - philo->arg->program_start);
 		philo[i].pid = fork();
 		if (philo[i].pid == 0)
 		{
 			pthread_create(&philo[i].t, NULL, philo_funcn, &philo[i]);
 			check_eat_death(philo[i], &arg);
 		}
+		i++;
 	}
 	while (waitpid(-1, &x, 0) >= 0)
 	{
