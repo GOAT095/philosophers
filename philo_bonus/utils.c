@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 19:56:36 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/17 17:04:33 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/24 15:52:22 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,7 @@ void	get_args(t_arg *arg, char **av, int ac, t_philo **philo)
 	sem_unlink("file");
 	arg->forks = sem_open("file", O_CREAT, 0644, arg->number);
 	*philo = (t_philo *)malloc(sizeof(t_philo) * arg->number);
+	sem_unlink("print");
+	arg->protect_output = sem_open("print", O_CREAT, 0644, 1);
+	arg->program_start = get_time();
 }

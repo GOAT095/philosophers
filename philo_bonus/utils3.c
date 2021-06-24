@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/24 14:22:28 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/24 14:23:11 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/24 15:52:06 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,16 @@ void	ft_putstr_fd(char *s, int fd)
 	{
 		ft_putchar_fd(s[i], fd);
 		i++;
+	}
+}
+
+void	wait_for_pid(t_philo *philo, t_arg *arg)
+{
+	int	x;
+
+	while (waitpid(-1, &x, 0) >= 0)
+	{
+		if (WIFEXITED(x) && (WEXITSTATUS(x) == 3))
+			kill_all(philo, arg);
 	}
 }

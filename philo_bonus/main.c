@@ -6,15 +6,14 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:05:34 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/17 17:36:48 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/24 15:51:59 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_it(int i, t_philo *philo)
+void	print_it2(t_philo *philo, int i)
 {
-	sem_wait(philo->arg->protect_output);
 	if (i == EAT)
 	{
 		ft_putnbr_fd(get_time() - philo->arg->program_start, 1);
@@ -29,7 +28,13 @@ void	print_it(int i, t_philo *philo)
 		ft_putnbr_fd(philo->id + 1, 1);
 		ft_putstr_fd(" has taken a fork\n", 1);
 	}
-	else if (i == THINKING)
+}
+
+void	print_it(int i, t_philo *philo)
+{
+	sem_wait(philo->arg->protect_output);
+	print_it2(philo, i);
+	if (i == THINKING)
 	{
 		ft_putnbr_fd(get_time() - philo->arg->program_start, 1);
 		ft_putstr_fd(" ", 1);
@@ -75,7 +80,6 @@ void	check_eat_death(t_philo *philo, t_arg *arg)
 
 	while (1)
 	{
-		
 		if (philo->state != EAT
 			&& ((get_time() - philo->last_eat) >= arg->time_todie))
 		{
@@ -96,7 +100,6 @@ int	main(int ac, char **av)
 	t_philo	*philo;
 	t_arg	arg;
 	int		i;
-	int		x;
 
 	if (ac < 5 || ac > 6)
 		return (fail("error arguments number\n"));
@@ -105,11 +108,8 @@ int	main(int ac, char **av)
 	arg.number = 0;
 	get_args(&arg, av, ac, &philo);
 	init_philo(philo, &arg);
-	i = 0;
-	sem_unlink("print");
-	arg.protect_output = sem_open("print", O_CREAT, 0644, 1);
-	arg.program_start = get_time();
-	while (i < arg.number)
+	i = -1;
+	while (++i < arg.number)
 	{
 		philo[i].pid = fork();
 		if (philo[i].pid == 0)
@@ -117,12 +117,7 @@ int	main(int ac, char **av)
 			pthread_create(&philo[i].t, NULL, philo_funcn, &philo[i]);
 			check_eat_death(&philo[i], &arg);
 		}
-		i++;
 	}
-	while (waitpid(-1, &x, 0) >= 0)
-	{
-		if (WIFEXITED(x) && (WEXITSTATUS(x) == 3))
-			kill_all(philo, &arg);
-	}
+	wait_for_pid(philo, &arg);
 	return (0);
 }
