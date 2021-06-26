@@ -82,6 +82,8 @@ int	main(int ac, char **av)
 		return (fail("error arguments\n"));
 	arg.number = 0;
 	get_args(&arg, av, ac, &philo);
+	if (arg.number == 0)
+		return (0);
 	init_philo(philo, &arg);
 	i = -1;
 	while (++i < arg.number)
