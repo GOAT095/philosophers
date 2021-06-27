@@ -6,13 +6,13 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 19:56:36 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/24 15:52:22 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/27 14:57:37 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_strlen(const char *str) 
+int	ft_strlen(const char *str)
 {
 	int	i;
 

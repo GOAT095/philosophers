@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 19:56:36 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/17 17:04:33 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/27 15:59:58 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,5 +86,6 @@ void	get_args(t_arg *arg, char **av, int ac, t_philo **philo)
 		arg->must_eat = ft_atoi(av[5]);
 	while (++i < arg->number)
 		pthread_mutex_init(&arg->forks[i], NULL);
+	pthread_mutex_init(&arg->protect_output, NULL);
 	*philo = (t_philo *)malloc(sizeof(t_philo) * arg->number);
 }

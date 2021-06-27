@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:05:34 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/17 17:36:48 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/27 15:59:36 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,11 @@
 
 void	eating(t_philo *philo, int right)
 {
-	printf("%llu %d is thinking\n",
-		get_time() - philo->arg->program_start, philo->id + 1);
 	pthread_mutex_lock(&philo->arg->forks[philo->id]);
-	printf("%llu %d has taken a fork\n",
-		get_time() - philo->arg->program_start, philo->id + 1);
+	print_it(philo, LEFT_FORK);
 	pthread_mutex_lock(&philo->arg->forks[right]);
-	printf("%llu %d has taken a fork\n",
-		get_time() - philo->arg->program_start, philo->id + 1);
-	printf("%llu %d is eating\n",
-		get_time() - philo->arg->program_start, philo->id + 1);
+	print_it(philo, RIGHT_FORK);
+	print_it(philo, EAT);
 	philo->last_eat = get_time();
 	philo->eat_counter++;
 	philo->state = EAT;
