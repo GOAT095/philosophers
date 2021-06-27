@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 20:08:21 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/27 15:57:26 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/27 20:02:19 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,5 @@ void				init_philo(t_philo *philo, t_arg *arg);
 void				*philo_funcn(void *data);
 void				check_eat_death(t_philo *philo, t_arg *arg);
 void				eating(t_philo *philo, int right);
-void				print_it(t_philo *philo, int i);
+void				print_it(t_philo *philo, int i, int x);
 #endif

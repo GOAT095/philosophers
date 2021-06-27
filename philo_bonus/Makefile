@@ -1,6 +1,5 @@
 NAME = philo_bonus
 
-
 SRCS = main.c utils.c utils2.c utils3.c
 
 FLAGS = -Werror -Wextra -Wall

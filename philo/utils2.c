@@ -6,13 +6,13 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 21:49:21 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/27 16:00:34 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/27 21:41:07 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_it(t_philo *philo, int i)
+void	print_it(t_philo *philo, int i, int x)
 {
 	pthread_mutex_lock(&philo->arg->protect_output);
 	if (i == THINKING)
@@ -26,11 +26,11 @@ void	print_it(t_philo *philo, int i)
 			get_time() - philo->arg->program_start, philo->id + 1);
 	else if (i == SLEEP)
 		printf("%llu %d is sleeping\n",
-			get_time() - philo->arg->program_start, philo->id + 1);
-	else if (i == DEAD)
+			get_time() - philo->arg->program_start, philo->id + 1);pthread_mutex_unlock(&philo->arg->protect_output);
+	if (i == DEAD)
 		printf("%llu %d is dead\n",
-			get_time() - philo->arg->program_start, philo[i].id + 1);
-	pthread_mutex_unlock(&philo->arg->protect_output);
+			get_time() - philo->arg->program_start, philo[x].id + 1);
+	
 }
 
 int	check_args(char **av)
@@ -82,7 +82,7 @@ void	*philo_funcn(void *data)
 	{
 		right = (philo->id + 1) % philo->arg->number;
 		eating(philo, right);
-		print_it(philo, SLEEP);
+		print_it(philo, SLEEP, 0);
 		pthread_mutex_unlock(&philo->arg->forks[right]);
 		pthread_mutex_unlock(&philo->arg->forks[philo->id]);
 		start_sleep = get_time();
@@ -90,7 +90,7 @@ void	*philo_funcn(void *data)
 		usleep(philo->arg->time_tosleep * 1000 - 1400);
 		while (get_time() - start_sleep < philo->arg->time_tosleep)
 			;
-		print_it(philo, THINKING);
+		print_it(philo, THINKING, 0);
 	}
 	return (NULL);
 }

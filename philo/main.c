@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:05:34 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/27 15:59:36 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/27 21:10:25 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	eating(t_philo *philo, int right)
 {
 	pthread_mutex_lock(&philo->arg->forks[philo->id]);
-	print_it(philo, LEFT_FORK);
+	print_it(philo, LEFT_FORK, 0);
 	pthread_mutex_lock(&philo->arg->forks[right]);
-	print_it(philo, RIGHT_FORK);
-	print_it(philo, EAT);
+	print_it(philo, RIGHT_FORK, 0);
+	print_it(philo, EAT, 0);
 	philo->last_eat = get_time();
 	philo->eat_counter++;
 	philo->state = EAT;
@@ -48,8 +48,7 @@ void	check_eat_death(t_philo *philo, t_arg *arg)
 			if (philo[i].state != EAT
 				&& ((get_time() - philo[i].last_eat) >= arg->time_todie))
 			{
-				printf("%llu %d is dead\n",
-					get_time() - philo->arg->program_start, philo[i].id + 1);
+				print_it(philo, DEAD, i);
 				return ;
 			}
 			check_count(philo, i, arg);
