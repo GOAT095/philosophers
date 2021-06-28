@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 21:49:21 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/28 15:27:35 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/28 16:34:38 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	*philo_funcn(void *data)
 
 	philo = data;
 	while ((philo->eat_counter < philo->arg->must_eat
-		|| philo->arg->must_eat == -1) && philo->arg->dead == 0)
+			|| philo->arg->must_eat == -1) && (philo->arg->dead == 0))
 	{
 		right = (philo->id + 1) % philo->arg->number;
 		eating(philo, right);
