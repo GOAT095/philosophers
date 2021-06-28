@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:05:34 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/24 15:51:59 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/28 15:33:45 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	print_it(int i, t_philo *philo)
 	sem_post(philo->arg->protect_output);
 }
 
-void	eating(t_philo *philo, int right)
+void	eating(t_philo *philo)
 {
 	sem_wait(philo->arg->forks);
 	print_it(LEFT_FORK, philo);
@@ -69,15 +69,13 @@ void	eating(t_philo *philo, int right)
 	print_it(EAT, philo);
 	philo->last_eat = get_time();
 	philo->eat_counter++;
-	sleep_it(philo->arg->time_toeat, philo->arg);
+	sleep_it(philo->arg->time_toeat);
 	sem_post(philo->arg->forks);
 	sem_post(philo->arg->forks);
 }
 
 void	check_eat_death(t_philo *philo, t_arg *arg)
 {
-	int	i;
-
 	while (1)
 	{
 		if (philo->state != EAT

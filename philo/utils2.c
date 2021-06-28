@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 21:49:21 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/27 21:41:07 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/28 15:27:35 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,14 @@ void	print_it(t_philo *philo, int i, int x)
 			get_time() - philo->arg->program_start, philo->id + 1);
 	else if (i == SLEEP)
 		printf("%llu %d is sleeping\n",
-			get_time() - philo->arg->program_start, philo->id + 1);pthread_mutex_unlock(&philo->arg->protect_output);
+			get_time() - philo->arg->program_start, philo->id + 1);
+	pthread_mutex_unlock(&philo->arg->protect_output);
 	if (i == DEAD)
+	{	
+		pthread_mutex_lock(&philo->arg->protect_output);
 		printf("%llu %d is dead\n",
 			get_time() - philo->arg->program_start, philo[x].id + 1);
-	
+	}
 }
 
 int	check_args(char **av)
@@ -77,14 +80,15 @@ void	*philo_funcn(void *data)
 	int					right;
 
 	philo = data;
-	while (philo->eat_counter < philo->arg->must_eat
-		|| philo->arg->must_eat == -1)
+	while ((philo->eat_counter < philo->arg->must_eat
+		|| philo->arg->must_eat == -1) && philo->arg->dead == 0)
 	{
 		right = (philo->id + 1) % philo->arg->number;
 		eating(philo, right);
-		print_it(philo, SLEEP, 0);
-		pthread_mutex_unlock(&philo->arg->forks[right]);
+		if (!philo->arg->dead)
+			print_it(philo, SLEEP, 0);
 		pthread_mutex_unlock(&philo->arg->forks[philo->id]);
+		pthread_mutex_unlock(&philo->arg->forks[right]);
 		start_sleep = get_time();
 		philo->state = SLEEP;
 		usleep(philo->arg->time_tosleep * 1000 - 1400);

@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:05:34 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/27 21:10:25 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/28 15:15:37 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	check_eat_death(t_philo *philo, t_arg *arg)
 			if (philo[i].state != EAT
 				&& ((get_time() - philo[i].last_eat) >= arg->time_todie))
 			{
+				arg->dead = 1;
 				print_it(philo, DEAD, i);
 				return ;
 			}
@@ -86,5 +87,6 @@ int	main(int ac, char **av)
 		usleep(100);
 	}
 	check_eat_death(philo, &arg);
+	usleep(100);
 	return (0);
 }

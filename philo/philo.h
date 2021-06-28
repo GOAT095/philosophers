@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 20:08:21 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/27 20:02:19 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/28 14:51:04 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 
 typedef struct s_arg
 {
+	int					dead;
 	int					all_eat;
 	int					number;
 	unsigned long long	program_start;

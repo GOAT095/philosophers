@@ -4,10 +4,10 @@ SRCS = main.c utils.c utils2.c
 
 FLAGS = -Werror -Wextra -Wall
 
-SAN = -g -fsanitize=address
+#SAN = -g -fsanitize=address
 
 $(NAME) :
-	gcc  $(SAN) $(SRCS) -o $(NAME)
+	gcc $(FLAGS) $(SRCS) -o $(NAME)
 	
 all: $(NAME)
 

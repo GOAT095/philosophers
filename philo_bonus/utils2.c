@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/15 21:49:21 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/24 15:43:06 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/28 15:34:03 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	init_philo(t_philo *philo, t_arg *arg)
 	}
 }
 
-void	sleep_it(unsigned long long time, t_arg *arg)
+void	sleep_it(unsigned long long time)
 {
 	unsigned long long	start_sleep;
 
@@ -62,16 +62,15 @@ void	sleep_it(unsigned long long time, t_arg *arg)
 void	*philo_funcn(void *data)
 {
 	t_philo				*philo;
-	int					right;
 
 	philo = data;
 	while (philo->eat_counter < philo->arg->must_eat
 		|| philo->arg->must_eat == -1)
 	{
-		eating(philo, right);
+		eating(philo);
 		print_it(SLEEP, philo);
 		philo->state = SLEEP;
-		sleep_it(philo->arg->time_tosleep, philo->arg);
+		sleep_it(philo->arg->time_tosleep);
 		print_it(THINKING, philo);
 		philo->state = THINKING;
 	}

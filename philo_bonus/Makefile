@@ -5,7 +5,7 @@ SRCS = main.c utils.c utils2.c utils3.c
 FLAGS = -Werror -Wextra -Wall
 
 $(NAME) :
-	gcc $(SRCS) -o $(NAME)
+	gcc $(FLAGS) $(SRCS) -o $(NAME)
 	
 all: $(NAME)
 
