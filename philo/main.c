@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:05:34 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/28 21:38:24 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/29 18:12:12 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,10 @@ int	main(int ac, char **av)
 		return (fail("error arguments\n"));
 	arg.number = 0;
 	get_args(&arg, av, ac, &philo);
+	init_philo(philo, &arg);
 	if (arg.number == 0)
 		return (0);
-	init_philo(philo, &arg);
+	
 	i = 0;
 	while (i < arg.number)
 	{
