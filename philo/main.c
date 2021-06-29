@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:05:34 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/28 16:29:42 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/28 21:38:24 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	main(int ac, char **av)
 		pthread_create(&philo[i].t, NULL, philo_funcn, &philo[i]);
 		i = i + 2;
 	}
+	usleep(900);
 	check_eat_death(philo, &arg);
-	usleep(100);
 	return (0);
 }
