@@ -6,7 +6,7 @@
 /*   By: anassif <anassif@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/09 16:05:34 by anassif           #+#    #+#             */
-/*   Updated: 2021/06/29 18:12:12 by anassif          ###   ########.fr       */
+/*   Updated: 2021/06/28 15:15:37 by anassif          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ void	check_eat_death(t_philo *philo, t_arg *arg)
 			{
 				arg->dead = 1;
 				print_it(philo, DEAD, i);
-				exit(0);
-				break ;
+				return ;
 			}
 			check_count(philo, i, arg);
 			if (arg->all_eat == arg->number)
@@ -59,7 +58,7 @@ void	check_eat_death(t_philo *philo, t_arg *arg)
 				i = -1;
 				while (++i < arg->number)
 					pthread_join(philo[i].t, NULL);
-				break ;
+				return ;
 			}
 		}
 		usleep(10);
@@ -78,24 +77,16 @@ int	main(int ac, char **av)
 		return (fail("error arguments\n"));
 	arg.number = 0;
 	get_args(&arg, av, ac, &philo);
-	init_philo(philo, &arg);
 	if (arg.number == 0)
 		return (0);
-	
-	i = 0;
-	while (i < arg.number)
+	init_philo(philo, &arg);
+	i = -1;
+	while (++i < arg.number)
 	{
 		pthread_create(&philo[i].t, NULL, philo_funcn, &philo[i]);
-		i = i + 2;
+		usleep(100);
 	}
-	usleep(100);
-	i = 1;
-	while (i < arg.number)
-	{
-		pthread_create(&philo[i].t, NULL, philo_funcn, &philo[i]);
-		i = i + 2;
-	}
-	usleep(900);
 	check_eat_death(philo, &arg);
+	usleep(100);
 	return (0);
 }
