@@ -50,7 +50,8 @@ void	check_eat_death(t_philo *philo, t_arg *arg)
 			{
 				arg->dead = 1;
 				print_it(philo, DEAD, i);
-				return ;
+				exit(0);
+				break ;
 			}
 			check_count(philo, i, arg);
 			if (arg->all_eat == arg->number)
@@ -58,7 +59,7 @@ void	check_eat_death(t_philo *philo, t_arg *arg)
 				i = -1;
 				while (++i < arg->number)
 					pthread_join(philo[i].t, NULL);
-				return ;
+				break ;
 			}
 		}
 		usleep(10);
