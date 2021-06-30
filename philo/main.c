@@ -50,6 +50,7 @@ void	check_eat_death(t_philo *philo, t_arg *arg)
 			{
 				arg->dead = 1;
 				print_it(philo, DEAD, i);
+				// exit(0);
 				return ;
 			}
 			check_count(philo, i, arg);
@@ -87,6 +88,6 @@ int	main(int ac, char **av)
 		usleep(100);
 	}
 	check_eat_death(philo, &arg);
-	usleep(100);
+	usleep(1000000);
 	return (0);
 }

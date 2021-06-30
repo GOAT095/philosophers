@@ -14,7 +14,9 @@
 
 void	print_it(t_philo *philo, int i, int x)
 {
-	pthread_mutex_lock(&philo->arg->protect_output);
+	x = 0;
+	pthread_mutex_lock(&(philo->arg->protect_output));
+	// printf("adress == /%p/\n", &(philo->arg->protect_output));
 	if (i == THINKING)
 		printf("%llu %d is thinking\n",
 			get_time() - philo->arg->program_start, philo->id + 1);
@@ -27,13 +29,15 @@ void	print_it(t_philo *philo, int i, int x)
 	else if (i == SLEEP)
 		printf("%llu %d is sleeping\n",
 			get_time() - philo->arg->program_start, philo->id + 1);
-	pthread_mutex_unlock(&philo->arg->protect_output);
-	if (i == DEAD)
-	{	
-		pthread_mutex_lock(&philo->arg->protect_output);
+	
+	else if (i == DEAD)
+	{
 		printf("%llu %d is dead\n",
-			get_time() - philo->arg->program_start, philo[x].id + 1);
+			get_time() - philo->arg->program_start, philo->id + 1);
+		return ;
 	}
+	// printf("adress == /%p/\n", &(philo->arg->protect_output));
+	pthread_mutex_unlock(&(philo->arg->protect_output));
 }
 
 int	check_args(char **av)
