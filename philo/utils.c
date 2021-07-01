@@ -87,6 +87,5 @@ void	get_args(t_arg *arg, char **av, int ac, t_philo **philo)
 	while (++i < arg->number)
 		pthread_mutex_init(&arg->forks[i], NULL);
 	pthread_mutex_init(&arg->protect_output, NULL);
-	arg->dead = 0;
 	*philo = (t_philo *)malloc(sizeof(t_philo) * arg->number);
 }

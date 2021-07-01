@@ -15,10 +15,10 @@
 void	eating(t_philo *philo, int right)
 {
 	pthread_mutex_lock(&philo->arg->forks[philo->id]);
-	print_it(philo, LEFT_FORK, 0);
+	print_it(philo, LEFT_FORK);
 	pthread_mutex_lock(&philo->arg->forks[right]);
-	print_it(philo, RIGHT_FORK, 0);
-	print_it(philo, EAT, 0);
+	print_it(philo, RIGHT_FORK);
+	print_it(philo, EAT);
 	philo->last_eat = get_time();
 	philo->eat_counter++;
 	philo->state = EAT;
@@ -48,9 +48,8 @@ void	check_eat_death(t_philo *philo, t_arg *arg)
 			if (philo[i].state != EAT
 				&& ((get_time() - philo[i].last_eat) >= arg->time_todie))
 			{
-				arg->dead = 1;
-				print_it(philo, DEAD, i);
-				// exit(0);
+				print_it(philo, DEAD);
+				free(philo);
 				return ;
 			}
 			check_count(philo, i, arg);
@@ -88,6 +87,6 @@ int	main(int ac, char **av)
 		usleep(100);
 	}
 	check_eat_death(philo, &arg);
-	usleep(1000000);
+	usleep(100);
 	return (0);
 }

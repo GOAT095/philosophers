@@ -12,30 +12,51 @@
 
 #include "philo.h"
 
-void	print_it(t_philo *philo, int i, int x)
+void	print_it2(t_philo *philo, int i)
 {
-	x = 0;
-	pthread_mutex_lock(&(philo->arg->protect_output));
-	if (i == THINKING)
-		printf("%llu %d is thinking\n",
-			get_time() - philo->arg->program_start, philo->id + 1);
-	else if (i == EAT)
-		printf("%llu %d is eating\n",
-			get_time() - philo->arg->program_start, philo->id + 1);
+	if (i == EAT)
+	{
+		ft_putnbr_fd(get_time() - philo->arg->program_start, 1);
+		ft_putstr_fd(" ", 1);
+		ft_putnbr_fd(philo->id + 1, 1);
+		ft_putstr_fd(" is eating\n", 1);
+	}
 	else if (i == LEFT_FORK || i == RIGHT_FORK)
-		printf("%llu %d has taken a fork\n",
-			get_time() - philo->arg->program_start, philo->id + 1);
+	{
+		ft_putnbr_fd(get_time() - philo->arg->program_start, 1);
+		ft_putstr_fd(" ", 1);
+		ft_putnbr_fd(philo->id + 1, 1);
+		ft_putstr_fd(" has taken a fork\n", 1);
+	}
+}
+
+void	print_it(t_philo *philo, int i)
+{
+	pthread_mutex_lock(&philo->arg->protect_output);
+	print_it2(philo, i);
+	if (i == THINKING)
+	{
+		ft_putnbr_fd(get_time() - philo->arg->program_start, 1);
+		ft_putstr_fd(" ", 1);
+		ft_putnbr_fd(philo->id + 1, 1);
+		ft_putstr_fd(" is thinking\n", 1);
+	}
 	else if (i == SLEEP)
-		printf("%llu %d is sleeping\n",
-			get_time() - philo->arg->program_start, philo->id + 1);
-	
+	{	
+		ft_putnbr_fd(get_time() - philo->arg->program_start, 1);
+		ft_putstr_fd(" ", 1);
+		ft_putnbr_fd(philo->id + 1, 1);
+		ft_putstr_fd(" is sleeping\n", 1);
+	}
 	else if (i == DEAD)
 	{
-		printf("%llu %d is dead\n",
-			get_time() - philo->arg->program_start, philo->id + 1);
+		ft_putnbr_fd(get_time() - philo->arg->program_start, 1);
+		ft_putstr_fd(" ", 1);
+		ft_putnbr_fd(philo->id + 1, 1);
+		ft_putstr_fd(" is dead\n", 1);
 		return ;
 	}
-	pthread_mutex_unlock(&(philo->arg->protect_output));
+	pthread_mutex_unlock(&philo->arg->protect_output);
 }
 
 int	check_args(char **av)
@@ -83,12 +104,11 @@ void	*philo_funcn(void *data)
 
 	philo = data;
 	while ((philo->eat_counter < philo->arg->must_eat
-		|| philo->arg->must_eat == -1) && philo->arg->dead == 0)
+			|| philo->arg->must_eat == -1))
 	{
 		right = (philo->id + 1) % philo->arg->number;
 		eating(philo, right);
-		if (!philo->arg->dead)
-			print_it(philo, SLEEP, 0);
+		print_it(philo, SLEEP);
 		pthread_mutex_unlock(&philo->arg->forks[philo->id]);
 		pthread_mutex_unlock(&philo->arg->forks[right]);
 		start_sleep = get_time();
@@ -96,7 +116,7 @@ void	*philo_funcn(void *data)
 		usleep(philo->arg->time_tosleep * 1000 - 14000);
 		while (get_time() - start_sleep < philo->arg->time_tosleep)
 			;
-		print_it(philo, THINKING, 0);
+		print_it(philo, THINKING);
 	}
 	return (NULL);
 }
