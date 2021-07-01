@@ -45,12 +45,14 @@ void	check_eat_death(t_philo *philo, t_arg *arg)
 		i = -1;
 		while (++i < arg->number)
 		{
-			if (philo[i].state != EAT
-				&& ((get_time() - philo[i].last_eat) >= arg->time_todie))
+			if (philo[i].state != EAT)
 			{
-				print_it(philo, DEAD);
-				free(philo);
-				return ;
+				if ((get_time() - philo[i].last_eat) >= arg->time_todie)
+				{
+					print_it(philo, DEAD);
+					free(philo);
+					return ;
+				}
 			}
 			check_count(philo, i, arg);
 			if (arg->all_eat == arg->number)

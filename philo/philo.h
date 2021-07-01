@@ -38,6 +38,7 @@ typedef struct s_arg
 	int					must_eat;
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		protect_output;
+	pthread_mutex_t		count;
 }				t_arg;
 
 typedef struct s_philo
