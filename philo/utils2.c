@@ -30,7 +30,7 @@ void	print_it2(t_philo *philo, int i)
 	}
 }
 
-void	print_it(t_philo *philo, int i)
+void	print_it(t_philo *philo, int i, int index)
 {
 	pthread_mutex_lock(&philo->arg->protect_output);
 	print_it2(philo, i);
@@ -52,7 +52,7 @@ void	print_it(t_philo *philo, int i)
 	{
 		ft_putnbr_fd(get_time() - philo->arg->program_start, 1);
 		ft_putstr_fd(" ", 1);
-		ft_putnbr_fd(philo->id + 1, 1);
+		ft_putnbr_fd(philo[index].id + 1, 1);
 		ft_putstr_fd(" is dead\n", 1);
 		return ;
 	}
@@ -89,7 +89,6 @@ void	init_philo(t_philo *philo, t_arg *arg)
 	while (++i < arg->number)
 	{
 		philo[i].id = i;
-		philo[i].last_eat = get_time();
 		philo[i].eat_counter = 0;
 		philo[i].arg = arg;
 		philo[i].state = START;
@@ -108,15 +107,15 @@ void	*philo_funcn(void *data)
 	{
 		right = (philo->id + 1) % philo->arg->number;
 		eating(philo, right);
-		print_it(philo, SLEEP);
+		philo->state = SLEEP;
+		print_it(philo, SLEEP, 0);
 		pthread_mutex_unlock(&philo->arg->forks[philo->id]);
 		pthread_mutex_unlock(&philo->arg->forks[right]);
 		start_sleep = get_time();
-		philo->state = SLEEP;
 		usleep(philo->arg->time_tosleep * 1000 - 14000);
 		while (get_time() - start_sleep < philo->arg->time_tosleep)
 			;
-		print_it(philo, THINKING);
+		print_it(philo, THINKING, 0);
 	}
 	return (NULL);
 }
