@@ -37,6 +37,7 @@ typedef struct s_arg
 	unsigned long long	time_tosleep;
 	int					must_eat;
 	pthread_mutex_t		*forks;
+	pthread_mutex_t		*is_eating;
 	pthread_mutex_t		protect_output;
 	pthread_mutex_t		count;
 }				t_arg;

@@ -42,15 +42,15 @@ void	check_eat_death(t_philo *philo, t_arg *arg)
 
 	while (1)
 	{
-		i = -1;
-		while (++i < arg->number)
+		i = 0;
+		
+		while (i < arg->number)
 		{
 			if (philo[i].state != EAT)
 			{
 				if ((get_time() - philo[i].last_eat) >= arg->time_todie)
 				{
 					print_it(philo, DEAD);
-					free(philo);
 					return ;
 				}
 			}
@@ -62,6 +62,7 @@ void	check_eat_death(t_philo *philo, t_arg *arg)
 					pthread_join(philo[i].t, NULL);
 				return ;
 			}
+			i++;
 		}
 		usleep(10);
 	}
@@ -90,5 +91,6 @@ int	main(int ac, char **av)
 	}
 	check_eat_death(philo, &arg);
 	usleep(100);
+	free(philo);
 	return (0);
 }

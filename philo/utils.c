@@ -73,6 +73,7 @@ void	get_args(t_arg *arg, char **av, int ac, t_philo **philo)
 
 	i = -1;
 	arg->forks = malloc(sizeof(pthread_mutex_t) * (int)ft_atoi(av[1]));
+	arg->is_eating = malloc(sizeof(pthread_mutex_t) * (int)ft_atoi(av[1]));
 	arg->number = ft_atoi(av[1]);
 	if (arg->number == 0)
 		return ;
@@ -85,7 +86,10 @@ void	get_args(t_arg *arg, char **av, int ac, t_philo **philo)
 	if (ac == 6)
 		arg->must_eat = ft_atoi(av[5]);
 	while (++i < arg->number)
+	{
 		pthread_mutex_init(&arg->forks[i], NULL);
+		pthread_mutex_init(&arg->is_eating[i], NULL);
+	}
 	pthread_mutex_init(&arg->protect_output, NULL);
 	pthread_mutex_init(&arg->count, NULL);
 	*philo = (t_philo *)malloc(sizeof(t_philo) * arg->number);
