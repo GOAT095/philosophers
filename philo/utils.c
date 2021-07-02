@@ -72,7 +72,8 @@ void	get_args(t_arg *arg, char **av, int ac, t_philo **philo)
 	int	i;
 
 	i = -1;
-	arg->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * (int)ft_atoi(av[1]));
+	arg->number = 0;
+	arg->forks = malloc(sizeof(pthread_mutex_t) * (int)ft_atoi(av[1]));
 	arg->number = ft_atoi(av[1]);
 	if (arg->number == 0)
 		return ;

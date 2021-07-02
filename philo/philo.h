@@ -65,5 +65,4 @@ void				print_it(t_philo *philo, int i, int index);
 void				ft_putnbr_fd(int n, int fd);
 void				ft_putchar_fd(char c, int fd);
 void				ft_putstr_fd(char *s, int fd);
-size_t g_time;
 #endif

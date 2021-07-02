@@ -27,6 +27,16 @@ void	eating(t_philo *philo, int right)
 		;
 }
 
+int	check_count(t_philo *philo, int i, t_arg *arg)
+{
+	if ((get_time() - philo[i].last_eat) >= arg->time_todie)
+	{
+		print_it(philo, DEAD, i);
+		return (1);
+	}
+	return (0);
+}
+
 void	check_eat_death(t_philo *philo, t_arg *arg)
 {
 	int	i;
@@ -38,11 +48,8 @@ void	check_eat_death(t_philo *philo, t_arg *arg)
 		{
 			if (philo[i].state != EAT)
 			{
-				if ((get_time() - philo[i].last_eat) >= arg->time_todie)
-				{
-					print_it(philo, DEAD, i);
+				if (check_count(philo, i, arg))
 					return ;
-				}
 				if (arg->must_eat != -1)
 				{
 					if (philo[i].eat_counter >= arg->must_eat)
@@ -68,14 +75,11 @@ int	main(int ac, char **av)
 	t_arg	*arg;
 	int		i;
 
-	g_time = get_time();
 	if (ac < 5 || ac > 6)
 		return (fail("error arguments number\n"));
 	if (!(check_args(av)))
 		return (fail("error arguments\n"));
 	arg = (t_arg *)malloc(sizeof(t_arg));
-	arg->number = 0;
-	
 	get_args(arg, av, ac, &philo);
 	if (arg->number == 0)
 		return (0);
