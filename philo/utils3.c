@@ -58,3 +58,13 @@ void	ft_putstr_fd(char *s, int fd)
 		i++;
 	}
 }
+
+void	join_thread(t_philo *philo, t_arg *arg)
+{
+	int	i;
+
+	i = -1;
+	while (++i < arg->number)
+		pthread_join(philo[i].t, NULL);
+	return ;
+}
